@@ -1,0 +1,44 @@
+<app-header title="Actualizar Pago" [showMenu]="true" [backButton]="'/main/rutero'" />
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+
+    <ion-card-header>
+      <ion-card-title>{{ cliente().alias | titlecase }}</ion-card-title>
+      <ion-card-subtitle>Pago Actual</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-text>
+        <h3>Fecha y hora del pago: {{ credito().pagos[0].fecha }}</h3>
+      </ion-text>
+
+      <ion-text>
+        <h3>Valor del pago: {{ credito().pagos[0].valor | currency:'$' }}</h3>
+      </ion-text>
+
+      <form>
+        <ion-list>
+          <app-custom-input 
+            label="Ingresa el nuevo pago"
+            type="number"
+            icon="cash-outline"
+            [control]="control"
+            (ionInput)="setNumberInputs()"
+          />
+
+          <ion-button
+            expand="full"
+            color="success"
+            mode="ios"
+            [disabled]="control.invalid"
+            (click)="showConfirmationUpdatePago()"
+          >Actualizar Pago</ion-button>
+        </ion-list>
+      </form>
+
+    </ion-card-content>
+
+  </ion-card>
+</ion-content>

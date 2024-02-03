@@ -1,0 +1,79 @@
+<app-header title="Pago" [showMenu]="true" [backButton]="'/main/rutero'" />
+
+<ion-content [fullscreen]="true">
+  <ion-card *ngIf="credito">
+    <ion-card-header>
+      <ion-card-title> {{ credito().cliente.nombre | titlecase }} </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+
+      <ion-text>
+        <h3><strong>Fecha Inicio: </strong> {{ credito().fecha_inicio }}</h3>
+      </ion-text>
+
+      <ion-text>
+        <h3><strong>Valor prestado: </strong> {{credito().valor_credito | currency:'$'}}</h3>
+      </ion-text>
+
+      <ion-text>
+        <h3>
+          <strong>Saldo: </strong> {{ credito().saldo | currency:'$' }}
+        </h3>
+      </ion-text>
+
+      <ion-text>
+        <h3>
+          <strong>Abonos: </strong> {{ credito().abonos | currency:'$' }}
+        </h3>
+      </ion-text>
+
+      <ion-text color="success">
+        <h3><strong>Cuota: </strong> {{ credito().valor_cuota | currency:'$' }}</h3>
+      </ion-text>
+
+      <ion-text>
+        <h3><strong>Cuotas Pendientes: </strong>{{(credito().saldo / credito().valor_cuota) | number:'1.2-2'}} / {{credito().total_cuotas}}</h3>
+      </ion-text>
+
+      <ion-text [color]="credito().clasificacion">
+        <h3>
+          <strong>Atrasos: </strong> {{ credito().atraso }}
+        </h3>
+      </ion-text>
+
+      <ion-text *ngIf="credito().notas">
+        <h3>
+          <strong>Observaciones: </strong> {{ credito().notas }}
+        </h3>
+      </ion-text>
+
+      <ion-text>
+        <h3><strong>Frecuencia de cobro: </strong>{{ credito().frecuencia_cobro | titlecase }}</h3>
+      </ion-text>
+
+      <ion-text>
+        <h2>Elija el tipo de pago:</h2>
+      </ion-text>
+
+      <ion-segment 
+        [value]="tipeOfPago" 
+        (ionChange)="changeTipeOfPago($event)"
+        mode="ios">
+        <ion-segment-button value="fijo">
+          <ion-label>Fijo</ion-label>
+        </ion-segment-button>
+
+        <ion-segment-button value="variable">
+          <ion-label>Variable</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-card-content>
+  </ion-card>
+  <app-pago-fijo 
+    *ngIf="tipeOfPago === 'fijo'" 
+    (ammountEvent)="pagar($event)" />
+
+  <app-pago-variable 
+    *ngIf="tipeOfPago === 'variable'" 
+    (ammountVariableEvent)="pagar($event)" />
+</ion-content>

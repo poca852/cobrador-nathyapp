@@ -1,0 +1,105 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>calculator</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content [fullscreen]="true">
+  <ion-grid class="calc-header">
+    <div class="calc-header-operation ion-text-end">
+        <ion-input [(ngModel)]="operationsValue"></ion-input>
+    </div>
+    <div class="calc-header-result ion-text-end">
+        {{result}}
+    </div>
+</ion-grid>
+<ion-row class="calc-body">
+    <ion-col size="9" class="calc-numbers">
+        <ion-row>
+            <ion-col>
+                <ion-button expand="full" mode="ios" (click)="buttonNumericClick(7)" color="#F2F3F5">
+                    7
+                </ion-button>
+            </ion-col>
+            <ion-col>
+                <ion-button expand="full" mode="ios" (click)="buttonNumericClick(8)" color="#F2F3F5">
+                    8
+                </ion-button>
+            </ion-col>
+            <ion-col>
+                <ion-button expand="full" mode="ios" (click)="buttonNumericClick(9)" color="#FF0000">
+                    9
+                </ion-button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-button expand="full" mode="ios" (click)="buttonNumericClick(4)" color="#F2F3F5">
+                    4
+                </ion-button>
+            </ion-col>
+            <ion-col>
+                <ion-button expand="full" mode="ios" (click)="buttonNumericClick(5)" color="#F2F3F5">
+                    5
+                </ion-button>
+            </ion-col>
+            <ion-col>
+                <ion-button expand="full" mode="ios" (click)="buttonNumericClick(6)" color="#F2F3F5">
+                    6
+                </ion-button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-button expand="full" mode="ios" (click)="buttonNumericClick(1)" color="#F2F3F5">
+                    1
+                </ion-button>
+            </ion-col>
+            <ion-col>
+                <ion-button expand="full" mode="ios" (click)="buttonNumericClick(2)" color="#F2F3F5">
+                    2
+                </ion-button>
+            </ion-col>
+            <ion-col>
+                <ion-button expand="full" mode="ios" (click)="buttonNumericClick(3)" color="#F2F3F5">
+                    3
+                </ion-button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-button expand="full" mode="ios" (click)="buttonNumericClick(0)" color="#F2F3F5">
+                    0
+                </ion-button>
+            </ion-col>
+            <ion-col>
+                <ion-button expand="full" mode="ios" color="#F2F3F5">
+                    .
+                </ion-button>
+            </ion-col>
+            <ion-col>
+                <ion-button expand="full" mode="ios" color="#F2F3F5">
+                    =
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-col>
+    <ion-col size="3" class="calc-operations">
+        <ion-button expand="full" mode="ios" (click)="buttonClearClick()" color="#F2F3F5">
+            <ion-icon slot="icon-only" name="backspace"></ion-icon>
+        </ion-button>
+        <ion-button expand="full" mode="ios" (click)="buttonCalcClick('÷')" color="#F2F3F5">
+            ÷
+        </ion-button>
+        <ion-button expand="full" mode="ios" (click)="buttonCalcClick('x')" color="#F2F3F5">
+            x
+        </ion-button>
+        <ion-button expand="full" mode="ios" (click)="buttonCalcClick('-')" color="#F2F3F5">
+            -
+        </ion-button>
+        <ion-button expand="full" mode="ios" (click)="buttonCalcClick('+')" color="#F2F3F5">
+            +
+        </ion-button>
+    </ion-col>
+</ion-row>
+</ion-content>

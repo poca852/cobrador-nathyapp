@@ -1,0 +1,70 @@
+<app-header title="Informacion" [showMenu]="true" [backButton]="'/main/rutero'" />
+
+<ion-content [fullscreen]="true">
+  
+  <ion-card 
+    mode="ios"
+  >
+    <ion-card-header>
+      <ion-card-title>
+        {{cliente().alias | titlecase}}
+      </ion-card-title>
+      <ion-card-subtitle>
+        {{cliente().nombre | titlecase}}
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content class="column">
+
+      <div>
+        <ion-text>
+          Documento: {{cliente().dpi}}
+        </ion-text>
+      </div>
+
+      <div>
+        <ion-text>
+          Direccion: {{cliente().direccion | titlecase}}
+        </ion-text>
+      </div>
+
+      <div>
+        <ion-text>
+          Ciudad: {{cliente().ciudad | titlecase}}
+        </ion-text>
+      </div>
+
+      <div>
+        <ion-text>
+          Telefono: {{cliente().telefono}}
+        </ion-text>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card mode="ios">
+    <ion-card-header>
+      <ion-card-subtitle>Historial de los ultimos 5 creditos</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content> 
+
+      <app-historial-creditos
+        [cliente]="cliente()" />
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button>
+      <ion-icon name="chevron-up-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button>
+        <ion-icon 
+          name="call"
+          (click)="llamarCliente()"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+</ion-content>

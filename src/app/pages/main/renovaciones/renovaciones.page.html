@@ -1,0 +1,45 @@
+<app-header title="Renovaciones" [showMenu]="true" />
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- !search bar -->
+  <app-search-bar 
+    *ngIf="!loading"
+    (onEmitQuery)="filtrarClientes($event)" 
+    [placeholder]="'Buscar...'"
+    [color]="'primary'" />
+
+  <ion-list *ngIf="loading">
+    <ion-item>
+      <ion-skeleton-text 
+        [animated]="true" 
+        style="width: 100%; height: 35px;"></ion-skeleton-text>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="!loading">
+    <ion-item 
+      *ngFor="let cliente of clientesFiltrados"
+      button
+      detail
+      (click)="presentActionSheet(cliente)">
+      <ion-label>
+        <ion-text class="ion-text-center">
+          <h2>{{ cliente.alias | titlecase }}</h2>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="loading">
+    <ion-item class="product-item" *ngFor="let product of [1,1,1,1,1,1]">
+      <ion-label>
+        <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

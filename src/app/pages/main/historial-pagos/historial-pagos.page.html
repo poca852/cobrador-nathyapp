@@ -1,0 +1,5 @@
+<app-header title="Historial Pago" [showMenu]="true" [backButton]="'/main/rutero'" />
+
+<ion-content [fullscreen]="true">
+  <app-pago-historial [pagos]="pagos()" [cliente]="cliente()" />
+</ion-content>

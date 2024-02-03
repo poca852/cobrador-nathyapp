@@ -1,0 +1,56 @@
+<form [formGroup]="form" (ngSubmit)="showConfirm()">
+
+  <ion-list>
+
+    <ion-item class="custom-input" lines="none">
+
+      <ion-select
+        placeholder="Selecciona un gasto"
+        formControlName="gasto"
+      >
+        <ion-select-option 
+          *ngFor="let gasto of listOfGasto"
+          [value]="gasto._id"
+        >
+        {{gasto.gasto}}
+        </ion-select-option>
+      </ion-select>
+
+    </ion-item>
+
+    <ion-item class="custom-input" lines="none">
+
+      <ion-icon
+        color="primary"
+        slot="start" 
+        name="cash-outline"></ion-icon>
+
+      <ion-input 
+        type="number" 
+        autocomplete="off"
+        label="Valor del Gasto"
+        formControlName="valor"
+        label-placement="floating"
+      >
+      </ion-input>
+
+    </ion-item>
+
+    <ion-item class="custom-input" lines="none">
+
+      <ion-textarea
+        label="Observaciones"
+        formControlName="nota"
+        label-placement="floating"
+      ></ion-textarea>
+
+    </ion-item>
+    
+  </ion-list>
+
+  <ion-button mode="ios" expand="full" class="ion-margin" type="submit" [disabled]="form.invalid">
+    Agregar Gasto
+    <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+  </ion-button>
+  
+</form>

@@ -1,0 +1,22 @@
+<app-header title="Enrutador" [showMenu]="true" />
+
+<ion-content [fullscreen]="true">
+  
+  <ion-list>
+
+    <ion-reorder-group [disabled]="false" (ionItemReorder)="reorderItems($any($event))">
+      <ion-item *ngFor="let item of creditos; let i = index">
+        <ion-avatar slot="start">
+          <ion-chip color="primary" mode="ios" outline="true">
+            <ion-label>{{i + 1}}</ion-label>
+          </ion-chip> 
+        </ion-avatar>
+        <ion-label>
+          {{ item.cliente.alias | titlecase}}
+        </ion-label>
+        <ion-reorder slot="end"></ion-reorder>
+      </ion-item>
+    </ion-reorder-group>
+  </ion-list>
+
+</ion-content>

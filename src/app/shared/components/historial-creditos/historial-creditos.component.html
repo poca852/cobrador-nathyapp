@@ -1,0 +1,63 @@
+<ion-list>
+  
+    <ion-item 
+      *ngFor="let credito of ultimos5Creditos"
+      [color]="credito.saldo > 0 ? 'primary':''">
+  
+      <ion-label>
+  
+        <div>
+          <ion-text>
+            Fecha Inicio - {{credito.fecha_inicio}}
+          </ion-text>
+        </div>
+  
+        <div>
+          <ion-text>
+            Valor credito - {{credito.valor_credito | currency:'$'}}  
+          </ion-text>
+        </div>
+  
+        <div *ngIf="credito.saldo > 0">
+          <ion-text>
+            Saldo - {{credito.saldo | currency:'$'}} 
+          </ion-text>
+        </div>
+        
+        <!-- ! pendiente mandar desde el backend esta data -->
+        <!-- <div>
+          <ion-text *ngIf="credito.saldo > 0">
+            Atraso - {{credito.atraso}}
+          </ion-text>
+        </div> -->
+  
+        <div *ngIf="credito.saldo > 0">
+          <ion-text>
+            <strong>Credito actual</strong>
+          </ion-text>
+        </div>
+        
+        <div *ngIf="credito.saldo < 1">
+          <ion-text>
+            Se demoro - {{ credito.dias_transcurridos }} dias en pagar el credito
+          </ion-text>
+        </div>
+
+        <div *ngIf="credito.saldo > 0">
+          <ion-text>
+            <ion-text>
+              Cuotas Pendientes - {{ (credito.saldo / credito.valor_cuota) | number:'1.2-2' }} / {{ credito.total_cuotas }}
+            </ion-text>
+          </ion-text>
+        </div>
+
+        <div *ngIf="credito.saldo < 1">
+          <ion-text>
+            Fecha de ultimo pago - {{ credito.ultimo_pago }}
+          </ion-text>
+        </div>
+        
+      </ion-label>
+  
+    </ion-item>
+</ion-list>

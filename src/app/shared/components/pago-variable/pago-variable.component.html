@@ -1,0 +1,28 @@
+<ion-card 
+  *ngIf="!loading" 
+  class="d-flex-center ion-text-center column"
+  mode="ios">
+
+  <ion-list>
+
+    <app-custom-input 
+      type="number"
+      icon="cash-outline"
+      [control]="ammount"
+      label="Cuota"
+      (ionInput)="setNumberInputs()"
+    />
+
+  </ion-list>
+
+  <ion-button 
+    mode="ios" 
+    class="ion-margin" 
+    color="success"
+    (click)="pagar()"
+    [disabled]="ammount.invalid">
+    Pagar
+    <ion-icon slot="end" name="cash-outline"></ion-icon>
+  </ion-button>
+
+</ion-card>

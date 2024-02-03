@@ -1,0 +1,140 @@
+<app-header title="Cliente Nuevo" [showMenu]="true" />
+
+<ion-content [fullscreen]="true">
+
+  <form
+    class="ion-padding ion-text-center"
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+  >
+
+    <!-- ! Documento -->
+    <app-custom-input 
+      autocomplete="off"
+      icon="card-outline"
+      [control]="form.controls.dpi"
+      type="number"
+      label="Documento"
+      (ionInput)="setNumberInputs()"
+    />
+
+    <div class="validators" *ngIf="form.controls.dpi.errors && form.controls.dpi.touched">
+      <div *ngIf="form.controls.dpi.errors?.['required']">El Documento es requerido</div>
+      <div *ngIf="form.controls.dpi.errors?.['minLength']">El Documento tiene que tener minimo 5 caracteres </div>
+    </div>
+
+    <!-- ! Nombre -->
+    <app-custom-input 
+      autocomplete="off"
+      [control]="form.controls.nombre"
+      type="text"
+      icon="person-outline"
+      label="Nombre"
+    />
+
+    <div class="validators" *ngIf="form.controls.nombre.errors && form.controls.nombre.touched">
+      <div *ngIf="form.controls.nombre.errors?.['required']">El Nombre es requerido</div>
+      <div *ngIf="form.controls.nombre.errors?.['minLength']">El Nombre tiene que tener minimo 4 caracteres </div>
+    </div>
+
+    <!-- ! Alias -->
+    <app-custom-input 
+      autocomplete="off"
+      icon="person-circle-outline"
+      [control]="form.controls.alias"
+      type="text"
+      label="Alias"
+    />
+
+    <div class="validators" *ngIf="form.controls.alias.errors && form.controls.alias.touched">
+      <div *ngIf="form.controls.alias.errors?.['required']">El Alias es requerido</div>
+      <div *ngIf="form.controls.alias.errors?.['minLength']">El Alias tiene que tener minimo 3 caracteres </div>
+    </div>
+
+    <!-- ! ciudad -->
+    <app-custom-input 
+      autocomplete="off"
+      icon="map-outline"
+      [control]="form.controls.ciudad"
+      type="text"
+      label="Ciudad"
+    />
+
+    <div class="validators" *ngIf="form.controls.ciudad.errors && form.controls.ciudad.touched">
+      <div *ngIf="form.controls.ciudad.errors?.['required']">El Ciudad es requerido</div>
+      <div *ngIf="form.controls.ciudad.errors?.['minLength']">El Ciudad tiene que tener minimo 3 caracteres </div>
+    </div>
+
+    <!-- ! Direccion -->
+    <app-custom-input 
+      autocomplete="off"
+      icon="navigate-circle-outline"
+      [control]="form.controls.direccion"
+      type="text"
+      label="Direccion"
+    />
+
+    <div class="validators" *ngIf="form.controls.direccion.errors && form.controls.direccion.touched">
+      <div *ngIf="form.controls.direccion.errors?.['required']">La Direccion es requerida</div>
+      <div *ngIf="form.controls.direccion.errors?.['minLength']">La Direccion tiene que tener minimo 5 caracteres </div>
+    </div>
+
+    <!-- !Telefono -->
+
+    <app-custom-input 
+      autocomplete="off"
+      icon="call-outline"
+      [control]="form.controls.telefono"
+      type="tel"
+      label="Telefono"
+    />
+
+    <div class="validators" *ngIf="form.controls.telefono.errors && form.controls.telefono.touched">
+      <div *ngIf="form.controls.telefono.errors?.['required']">El Telefono es requerido</div>
+    </div>
+
+    <!-- !imagenes -->
+    <div class="fotos">
+
+      <div class="foto" (click)="takePicture('document_image')">
+        <ion-img 
+          *ngIf="form.controls.document_image.value"
+          [src]="form.controls.document_image.value"></ion-img>
+        <ion-icon name="camera-outline" *ngIf="!form.controls.document_image.value"></ion-icon>
+        <ion-loading *ngIf="true"></ion-loading>
+        <ion-text *ngIf="!form.controls.document_image.value">Documento</ion-text>
+      </div>
+
+      <div class="foto" (click)="takePicture('business_image')">
+        <ion-img 
+          *ngIf="form.controls.business_image.value"
+          [src]="form.controls.business_image.value"></ion-img>
+        <ion-icon name="camera-outline" *ngIf="!form.controls.business_image.value"></ion-icon>
+        <ion-text *ngIf="!form.controls.business_image.value">Negocio</ion-text>
+      </div>
+
+      <div class="foto" (click)="takePicture('house_image')">
+        <ion-img
+          *ngIf="form.controls.house_image.value" 
+          [src]="form.controls.house_image.value"></ion-img>
+        <ion-icon name="camera-outline" *ngIf="!form.controls.house_image.value"></ion-icon>
+        <ion-text *ngIf="!form.controls.house_image.value">Casa</ion-text>
+      </div>
+
+    </div>
+
+    <div class="validators" *ngIf="form.controls.document_image.errors && form.controls.document_image.touched">
+      <div *ngIf="form.controls.document_image.errors?.['required']">
+        La foto del documento es requerida
+      </div>
+    </div>
+
+    <!-- ! botones -->
+    <ion-button mode="ios" expand="full" class="ion-margin" type="submit" [disabled]="form.invalid">
+      Agregar Cliente
+      <ion-icon slot="end" name="person-add-outline"></ion-icon>
+    </ion-button>
+
+  </form>
+
+</ion-content>

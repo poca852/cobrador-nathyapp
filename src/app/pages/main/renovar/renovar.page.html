@@ -1,0 +1,104 @@
+<app-header title="Renovando" [showMenu]="true" backButton="/main/rutero" />
+
+<ion-content [fullscreen]="true">
+
+  <form 
+    class="ion-padding" 
+    [formGroup]="form" 
+    (ngSubmit)="presentConfirm()">
+
+    <ion-text color="primary">
+      <h3>Renovando a {{cliente().alias | titlecase}}</h3>
+    </ion-text>
+
+    <ion-list>
+
+      <app-custom-input 
+        [control]="form.controls.valor_credito"
+        type="number"
+        (ionInput)="onInputChange($event, form.controls.valor_credito)"
+        label="Valor Credito"
+      />
+
+      <app-custom-input 
+        [control]="form.controls.interes"
+        type="number"
+        (ionInput)="onInputChange($event, form.controls.interes)"
+        label="Interes"
+      />
+
+      <app-custom-input 
+        [control]="form.controls.total_cuotas"
+        type="number"
+        (ionInput)="onInputChange($event, form.controls.total_cuotas)"
+        label="Numero de cuotas"
+      />
+
+      <app-custom-input 
+        [control]="form.controls.valor_cuota"
+        type="number"
+        (ionInput)="onInputChange($event, form.controls.valor_cuota)"
+        label="Valor de la cuota"
+      />
+
+      <app-custom-input 
+        [control]="form.controls.notas"
+        type="textarea"
+        label="Observaciones"
+      />
+
+      <ion-item class="custom-input" lines="none">
+        <ion-toggle 
+          formControlName="esAutomatico"
+          [enableOnOffLabels]="true">Manual / Automatico</ion-toggle>
+      </ion-item>
+
+      <ion-item class="custom-input" lines="none">
+        <ion-toggle
+          [enableOnOffLabels]="true"
+          formControlName="se_cobran_domingos">Cobrar Domingos</ion-toggle>
+      </ion-item>
+
+      <ion-item class="custom-input" lines="none">
+        <ion-radio-group formControlName="frecuencia_cobro" value="diario" >
+          <ion-radio value="diario">Diario</ion-radio>
+          <ion-radio value="semanal">Semanal</ion-radio>
+        </ion-radio-group>        
+      </ion-item>
+
+    </ion-list>
+
+    <div class="fotos">
+
+      <div class="foto" (click)="takePicture('document_image')">
+        <ion-img 
+          *ngIf="imagesCliente.document_image"
+          [src]="imagesCliente.document_image"></ion-img>
+        <ion-icon name="camera-outline" *ngIf="!imagesCliente.document_image"></ion-icon>
+        <ion-text *ngIf="!imagesCliente.document_image">Documento</ion-text>
+      </div>
+
+      <div class="foto" (click)="takePicture('business_image')">
+        <ion-img 
+          *ngIf="imagesCliente.business_image"
+          [src]="imagesCliente.business_image"></ion-img>
+        <ion-icon name="camera-outline" *ngIf="!imagesCliente.business_image"></ion-icon>
+        <ion-text *ngIf="!imagesCliente.business_image">Negocio</ion-text>
+      </div>
+
+      <div class="foto" (click)="takePicture('house_image')">
+        <ion-img
+          *ngIf="imagesCliente.house_image" 
+          [src]="imagesCliente.house_image"></ion-img>
+        <ion-icon name="camera-outline" *ngIf="!imagesCliente.house_image"></ion-icon>
+        <ion-text *ngIf="!imagesCliente.house_image">Casa</ion-text>
+      </div>
+
+    </div>
+
+    <ion-button mode="ios" expand="full" class="ion-margin" type="submit" [disabled]="form.invalid">
+      Guardar
+      <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+    </ion-button>
+  </form>
+</ion-content>

@@ -1,0 +1,27 @@
+<app-header title="Oficina" [showMenu]="true" />
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <ion-segment [value]="tipeOfGestion" (ionChange)="setTipeOfGestion($event)" mode="ios">
+
+    <ion-segment-button value="inversion">
+      <ion-label>Inversion</ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button value="gasto">
+      <ion-label>Gasto</ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button value="retiro">
+      <ion-label>Retiro</ion-label>
+    </ion-segment-button>
+
+  </ion-segment>
+
+  <app-gasto-oficina *ngIf="tipeOfGestion === 'gasto'" />
+
+  <app-retiro-oficina *ngIf="tipeOfGestion === 'retiro'" />
+
+  <app-inversion-oficina *ngIf="tipeOfGestion === 'inversion'" />
+
+</ion-content>

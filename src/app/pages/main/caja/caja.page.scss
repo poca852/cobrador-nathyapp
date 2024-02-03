@@ -1,0 +1,21 @@
+ion-card:nth-child(1) {
+   padding: 20px 0;
+}
+
+ion-content {
+   --padding-botton: 70px;
+}
+
+p {
+   margin-block-start: 0;
+}
+
+.share-caja {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  ion-icon{
+    color: white;
+  }
+}

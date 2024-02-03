@@ -1,0 +1,37 @@
+<form [formGroup]="form" (ngSubmit)="showConfirm()">
+
+  <ion-list>
+
+    <ion-item class="custom-input" lines="none">
+      <ion-icon
+        color="primary"
+        slot="start" 
+        name="cash-outline"></ion-icon>
+
+      <ion-input
+        autocomplete="off"
+        type="number"
+        label="Valor de la Inversion"
+        formControlName="valor"
+        label-placement="floating"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item class="custom-input" lines="none">
+
+      <ion-textarea
+        label="Observaciones"
+        formControlName="nota"
+        label-placement="floating"
+      ></ion-textarea>
+
+    </ion-item>
+
+  </ion-list>
+
+  <ion-button mode="ios" expand="full" class="ion-margin" type="submit" [disabled]="form.invalid">
+    Agregar Inversion
+    <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+  </ion-button>
+  
+</form>

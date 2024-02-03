@@ -1,0 +1,57 @@
+<app-header title="Caja" [showMenu]="true" />
+
+<ion-content [fullscreen]="true">
+  <ion-card
+    mode="ios"
+    color="primary"
+    *ngIf="!loading"
+    class="d-flex-center ion-text-center column" >
+
+      <ion-button
+        class="share-caja"
+        (click)="shareCaja()">
+        <ion-icon name="share-social-outline"></ion-icon>
+      </ion-button>
+
+      <h2>Ruta: {{ caja.ruta.nombre | titlecase }}</h2>
+
+      <p>Fecha: {{ caja!.fecha }}</p>
+
+      <p>Base: {{ caja!.base | currency:'$' }}</p>
+
+      <p>Clientes: {{ caja!.total_clientes }}</p>
+
+      <p>Clientes Pendientes: {{ caja!.clientes_pendientes }}</p>
+
+      <p>Pretendido: {{ caja!.pretendido | currency:'$' }}</p>
+
+      <p>Renovaciones: {{ caja!.renovaciones }}</p>
+
+      <p>Cobro: {{ caja!.cobro | currency:'$' }}</p>
+
+      <p>Extra: {{ caja!.extra | currency:'$' }}</p>
+
+      <p>Prestamo: {{ caja!.prestamo | currency:'$' }}</p>
+
+      <p>Gastos: {{ caja!.gasto | currency:'$' }}</p>
+
+      <p>Inversion: {{ caja!.inversion | currency:'$' }}</p>
+
+      <p>Retiro: {{ caja!.retiro | currency:'$' }}</p>
+
+      <p>Efectividad: {{ ((caja.cobro - caja.extra) * 100) / caja.pretendido | number:'1.2-2' }}%</p>
+
+      <p>Caja Final: {{ caja!.caja_final | currency:'$' }}</p>
+
+      <ion-button (click)="showConfirm()" color="danger" mode="ios" expand="full" class="ion-margin">
+        Cerrar Ruta
+        <ion-icon slot="end" name="power-outline"></ion-icon>
+      </ion-button>
+  </ion-card>
+
+  <ion-card
+    *ngIf="loading"
+    mode="ios">
+    <ion-skeleton-text animated style="width: 100%; height: 500px;"></ion-skeleton-text>
+  </ion-card>
+</ion-content>
