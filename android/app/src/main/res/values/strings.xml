@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Calculator</string>
+    <string name="title_activity_main">Calculator</string>
+    <string name="package_name">lat.nathyapp.cobrador</string>
+    <string name="custom_url_scheme">lat.nathyapp.cobrador</string>
+</resources>

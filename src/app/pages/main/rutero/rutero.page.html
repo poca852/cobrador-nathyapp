@@ -23,13 +23,13 @@
 
   <ion-list *ngIf="!loading">
     <ion-item *ngFor="let credito of creditosFiltrados" (click)="presentActionSheet(credito)" button detail="true">
-      <ion-avatar slot="start">
+      <!-- <ion-avatar slot="start">
         <ion-chip [color]="credito.clasificacion" mode="ios" outline="true">
           <ion-label>
             <strong>{{credito.atraso}}</strong>
           </ion-label>
         </ion-chip>
-      </ion-avatar>
+      </ion-avatar> -->
       <ion-label>
         <ion-text>
           <h2><strong>{{ credito.cliente.alias | titlecase }}</strong></h2>

@@ -41,6 +41,7 @@ export class AppComponent {
     App.addListener('appStateChange', (state: AppState) => {
       if(!state.isActive){
         this.utilsSvc.routerLink('calculator')
+        App.exitApp()
       }
     })
   }

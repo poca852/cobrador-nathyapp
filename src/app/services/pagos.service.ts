@@ -33,7 +33,7 @@ export class PagosService {
       .set('authorization', `Bearer ${this.user().token}`);
 
     const params = new HttpParams()
-      .set('fecha', moment().utc(true).format("YYYY/MM/DD"))
+      .set('fecha', moment().utc(true).format())
 
     return this.http.post<PagoResponse>(`${this.baseUrl}/pago`, pago, { headers, params })
   }
