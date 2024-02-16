@@ -17,22 +17,27 @@ export class AppComponent {
   ) {
 
     this.checkPermissions();
-    App.getLaunchUrl().then(resp => {
-      console.log(resp.url)
-    })
-    .catch(err => console.log(err))
-
     this.initialApp();
     
   }
 
   private async checkPermissions() {
+    
+    const permission = await Geolocation.checkPermissions();
+    if (permission.location !== 'granted') {
 
-    if(this.platform.is('hybrid')){
-      const permission = await Geolocation.checkPermissions();
-      if (permission.location === 'prompt') {
-        await Geolocation.requestPermissions();
-      }
+      navigator.geolocation.getCurrentPosition(
+        (position) => {},
+        (error) => {
+
+          this.utilsSvc.presentAlert({
+            header: 'Advertencia',
+            message: 'Por favor active la ubicacion',
+            buttons: ['OK']
+          })
+
+        })
+      
     }
     
   }
@@ -41,7 +46,6 @@ export class AppComponent {
     App.addListener('appStateChange', (state: AppState) => {
       if(!state.isActive){
         this.utilsSvc.routerLink('calculator')
-        App.exitApp()
       }
     })
   }

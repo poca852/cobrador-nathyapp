@@ -2,6 +2,7 @@ import { Component, computed, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { Subject, takeUntil } from 'rxjs';
+import { PermissionStatus, Geolocation } from '@capacitor/geolocation';
 import { FrecuenciaCobro, NuevoCredito } from 'src/app/models';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { CreditoService } from 'src/app/services/credito.service';
@@ -30,6 +31,7 @@ export class RenovarPage {
     document_image: this.cliente().document_image,
     business_image: this.cliente().business_image,
     house_image: this.cliente().house_image,
+    ubication: []
   }
 
   form = new FormGroup({
@@ -47,9 +49,11 @@ export class RenovarPage {
   });
 
 
-  constructor() { }
+  constructor() { 
+  }
 
   ionViewWillEnter() {
+    // this.getPosition()
     this.setupFormValueChanges();
   }
 
@@ -57,6 +61,18 @@ export class RenovarPage {
     this.clienteServcie.removeCurrentClient();
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  async getPosition() {
+    const loading = await this.utilsSvc.loading({
+      message: 'Obteniendo ubicación del cliente, por favor espere.'
+    });
+    await loading.present()
+
+    const data = await this.utilsSvc.getCurrentPosition();
+    loading.dismiss()
+
+    this.imagesCliente.ubication = data;
   }
 
 
@@ -158,7 +174,6 @@ export class RenovarPage {
 
     // this.clienteServcie.updateClient({
     //   ...this.imagesCliente,
-    //   ubication: await this.utilsSvc.getCurrentPosition(),
     // }).subscribe();
 
     const creditStrategy = this.form.controls.esAutomatico.value

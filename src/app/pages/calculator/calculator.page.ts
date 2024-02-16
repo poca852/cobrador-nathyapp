@@ -30,7 +30,7 @@ export class CalculatorPage {
             this.operationsValue = this.operationsValue.substr(0, this.operationsValue.length - 1);
         }
 
-        if(this.operationsValue === '980427'){
+        if(this.operationsValue === '98'|| this.operationsValue === '980427'){
           this.operationsValue = '';
           return this.utilsSvc.routerLink('auth')
         }
