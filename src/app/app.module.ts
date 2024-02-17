@@ -12,6 +12,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: environment.socketUrl, options: {} };
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +22,7 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     IonicModule.forRoot({mode: 'md'}),
     AppRoutingModule,
+    SocketIoModule.forRoot(config),
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),

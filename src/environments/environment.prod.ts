@@ -9,5 +9,6 @@ export const environment = {
     messagingSenderId: import.meta.env.NG_APP_MESSAGINGSENDERID,
   },
   production: true,
-  baseUrl: import.meta.env.NG_APP_PROD_API
+  baseUrl: import.meta.env.NG_APP_PROD_API,
+  socketUrl: import.meta.env.NG_APP_URL_DEV_SOCKET,
 };

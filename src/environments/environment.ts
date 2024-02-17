@@ -13,7 +13,8 @@ export const environment = {
     messagingSenderId: import.meta.env.NG_APP_MESSAGINGSENDERID,
   },
   production: false,
-  baseUrl: import.meta.env.NG_APP_DEV_API
+  baseUrl: import.meta.env.NG_APP_DEV_API,
+  socketUrl: import.meta.env.NG_APP_URL_DEV_SOCKET,
 };
 
 /*

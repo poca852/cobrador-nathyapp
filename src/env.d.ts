@@ -20,6 +20,7 @@ interface ImportMetaEnv {
   NG_APP_MESSAGINGSENDERID: string;
   NG_APP_PROD_API: string;
   NG_APP_DEV_API: string;
+  NG_APP_URL_DEV_SOCKET: string;
 }
 
 /*
