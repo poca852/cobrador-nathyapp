@@ -2,7 +2,6 @@ import { Component, computed, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { Subject, takeUntil } from 'rxjs';
-import { PermissionStatus, Geolocation } from '@capacitor/geolocation';
 import { FrecuenciaCobro, NuevoCredito } from 'src/app/models';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { CreditoService } from 'src/app/services/credito.service';
@@ -31,7 +30,6 @@ export class RenovarPage {
     document_image: this.cliente().document_image,
     business_image: this.cliente().business_image,
     house_image: this.cliente().house_image,
-    ubication: []
   }
 
   form = new FormGroup({
@@ -53,7 +51,6 @@ export class RenovarPage {
   }
 
   ionViewWillEnter() {
-    // this.getPosition()
     this.setupFormValueChanges();
   }
 
@@ -63,24 +60,14 @@ export class RenovarPage {
     this.ngUnsubscribe.complete();
   }
 
-  async getPosition() {
-    const loading = await this.utilsSvc.loading({
-      message: 'Obteniendo ubicación del cliente, por favor espere.'
-    });
-    await loading.present()
-
-    const data = await this.utilsSvc.getCurrentPosition();
-    loading.dismiss()
-
-    this.imagesCliente.ubication = data;
-  }
-
-
   public async takePicture(control: string) {
 
     try {
 
       const { dataUrl } = await this.utilsSvc.takePicture(`Selecciona / Toma una foto`);
+
+      const loading = await this.utilsSvc.loading({ message: 'Subiendo imagen...' });
+      await loading.present()
 
       let path: string = 'clientes';
 
@@ -103,8 +90,6 @@ export class RenovarPage {
       }
 
       const urlImage = await this.firebaseSvc.uploadImage(path, dataUrl);
-      const loading = await this.utilsSvc.loading({ message: 'Subiendo imagen...' });
-      await loading.present()
       this.imagesCliente[control] = urlImage;
       loading.dismiss();
 
@@ -171,11 +156,6 @@ export class RenovarPage {
 
   async renovar(): Promise<void> {
 
-
-    // this.clienteServcie.updateClient({
-    //   ...this.imagesCliente,
-    // }).subscribe();
-
     const creditStrategy = this.form.controls.esAutomatico.value
       ? new AutomaticCreditStrategy()
       : new ManualCreditStrategy();
@@ -186,6 +166,11 @@ export class RenovarPage {
     this.creditoService.addCredito(creditStrategy.createCredit(this.form.value as NuevoCredito))
       .subscribe({
         next: async (credito) => {
+
+          this.clienteServcie.updateClient({
+            ...this.imagesCliente,
+          }).subscribe();
+
           await loading.dismiss();
           this.utilsSvc.routerLink('/main/rutero');
           this.utilsSvc.presentToast({

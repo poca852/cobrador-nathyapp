@@ -64,9 +64,11 @@ export class ClienteNuevoPage {
     }
 
     try {
-
-
+      
       const { dataUrl } = await this.utilsSvc.takePicture(`Selecciona / Toma una foto`);
+      
+      const loading = await this.utilsSvc.loading({ message: 'Subiendo imagen...' });
+      await loading.present()
 
       let path: string = 'clientes';
 
@@ -88,8 +90,6 @@ export class ClienteNuevoPage {
       }
 
       const urlImage = await this.firebaseSvc.uploadImage(path, dataUrl);
-      const loading = await this.utilsSvc.loading({ message: 'Subiendo imagen...' });
-      await loading.present()
       this.form.get(control).setValue(urlImage);
       loading.dismiss();
 

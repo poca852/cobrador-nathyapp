@@ -40,7 +40,6 @@ export class ClienteService {
   }
 
   updateClient(formData: any) {
-
     const idClient = this.currentClient()?._id;
 
     const headers = new HttpHeaders()

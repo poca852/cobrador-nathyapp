@@ -5,6 +5,7 @@ import { PagosService } from 'src/app/services/pagos.service';
 import { NotificacionesService } from '../../../services/notificaciones.service';
 import { UtilsService } from '../../../services/utils.service';
 import { CrearPago } from 'src/app/helpers/crearPago';
+import { AppStateService } from 'src/app/services/app-state.service';
 
 @Component({
   selector: 'app-pago',
@@ -17,6 +18,7 @@ export class PagoPage {
   pagoService = inject(PagosService);
   creditoService = inject(CreditoService);
   comunicacionService = inject(NotificacionesService);
+  appStateSvc = inject(AppStateService);
 
   public tipeOfPago = "fijo";
   public credito = computed(() => this.creditoService.currentCredit());
@@ -86,10 +88,15 @@ export class PagoPage {
         {
           text: 'Si, Enviar',
           handler: async () => {
-            this.utilsSvc.share({
+
+            this.appStateSvc.setIsMakingPayment(true);
+
+            await this.utilsSvc.share({
               title: 'Pago exitoso',
               text: message
             })
+
+            this.appStateSvc.setIsMakingPayment(false);
             this.utilsSvc.routerLink('/main/rutero')
           }
         },

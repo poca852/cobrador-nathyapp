@@ -16,16 +16,16 @@ const routes: Routes = [
   },
   {
     path: 'calculator',
-    loadChildren: () => import('./pages/calculator/calculator.module').then( m => m.CalculatorPageModule)
+    loadChildren: () => import('./pages/calculator/calculator.module').then( m => m.CalculatorPageModule),
   },
   {
     path: '',
-    redirectTo: 'calculator',
+    redirectTo: 'auth',
     pathMatch: 'full'
   },
   {
     path: '**',
-    redirectTo: 'calculator'
+    redirectTo: 'auth'
   },
 
 ];

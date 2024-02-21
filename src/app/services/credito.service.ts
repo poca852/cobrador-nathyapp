@@ -61,6 +61,15 @@ export class CreditoService {
 
   }
 
+  updateTurno(idCredito: string, formData: any) {
+
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${this.user().token}`);
+      
+    return this.http.patch<boolean>(`${this.baseUrl}/credito/turno/${idCredito}`, {...formData}, { headers })
+
+  }
+
   getCreditos(): Observable<Credito[]> {
 
     const headers = new HttpHeaders()

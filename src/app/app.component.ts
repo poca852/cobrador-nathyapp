@@ -5,6 +5,7 @@ import { App, AppState } from '@capacitor/app';
 import { UtilsService } from './services/utils.service';
 import { WsService } from './services/ws-service.service';
 import { AuthService } from './services/auth.service';
+import { AppStateService } from './services/app-state.service';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit {
     private utilsSvc: UtilsService,
     private wsSvc: WsService,
     private authSvc: AuthService,
+    private appStateSvc: AppStateService,
   ) {
 
     this.checkPermissions();
@@ -57,9 +59,20 @@ export class AppComponent implements OnInit {
 
   initialApp() {
     App.addListener('appStateChange', (state: AppState) => {
-      if(!state.isActive){
-        this.utilsSvc.routerLink('calculator')
+
+      if( !state.isActive && !this.appStateSvc.getIsMakingPayment() ){
+
+        if( !this.appStateSvc.isUploadInProgress() && this.utilsSvc.getFromLocalStorage('user').ruta.have_login_falso ) {
+
+          if( !!this.utilsSvc.getFromLocalStorage('user') ){
+            this.utilsSvc.routerLink('calculator')
+          }
+
+        }
+
+
       }
+
     })
   }
 }

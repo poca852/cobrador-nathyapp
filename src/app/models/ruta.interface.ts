@@ -18,4 +18,5 @@ export interface Ruta {
    ultima_caja: string;
    turno: number;
    empresa?: string;
+   senha?: string;
 }

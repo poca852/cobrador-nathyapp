@@ -10,5 +10,5 @@ export const environment = {
   },
   production: true,
   baseUrl: import.meta.env.NG_APP_PROD_API,
-  socketUrl: import.meta.env.NG_APP_URL_DEV_SOCKET,
+  socketUrl: import.meta.env.NG_APP_URL_PROD_SOCKET,
 };

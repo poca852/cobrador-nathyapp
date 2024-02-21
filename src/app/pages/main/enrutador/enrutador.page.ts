@@ -41,7 +41,7 @@ export class EnrutadorPage implements OnInit {
       credito.turno = nuevoTurno;
 
       // Llama al servicio para actualizar el turno en la base de datos
-      this.creditoSvc.updateCredit(credito._id, { turno: nuevoTurno }).subscribe();
+      this.creditoSvc.updateTurno(credito._id, { turno: nuevoTurno }).subscribe();
     });
 
     // Completa la reordenación

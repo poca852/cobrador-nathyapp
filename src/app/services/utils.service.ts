@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { ActionSheetController, ActionSheetOptions, AlertController, AlertOptions, LoadingController, LoadingOptions, ModalController, ModalOptions, ToastController, ToastOptions } from '@ionic/angular';
 import { Share, ShareOptions } from '@capacitor/share';
-import { Geolocation } from '@capacitor/geolocation';
+import { Geolocation, Position } from '@capacitor/geolocation';
+import { AppStateService } from './app-state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class UtilsService {
   modalCtrl = inject(ModalController);
   alertCtrl = inject(AlertController);
   actionSheetCtrl = inject(ActionSheetController);
+  appStateSvc = inject(AppStateService);
   router = inject(Router);
 
   async presentAlert(opts?: AlertOptions) {
@@ -26,7 +28,11 @@ export class UtilsService {
   }
 
   async takePicture(promptLabelHeader: string) {
+    
+    this.appStateSvc.setUploadInProgress(true);
+
     try {
+
       const image = await Camera.getPhoto({
         quality: 90,
         allowEditing: false,
@@ -36,16 +42,23 @@ export class UtilsService {
         promptLabelPhoto: 'Selecciona una imagen',
         promptLabelPicture: 'Toma una foto'
       });
-      return image
+
+      this.appStateSvc.setUploadInProgress(false);
+
+      return image;
+
     } catch (error) {
+
+      this.appStateSvc.setUploadInProgress(false);
       return null;
+      
     }
   };
 
 
-  async getCurrentPosition(): Promise<[number, number]> {
-    const { latitude, longitude } = (await Geolocation.getCurrentPosition()).coords;
-    return [latitude, longitude];
+  async getCurrentPosition(): Promise<Position> {
+    const position = await Geolocation.getCurrentPosition({enableHighAccuracy: true});
+    return position;
   }
 
 
