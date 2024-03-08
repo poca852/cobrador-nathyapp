@@ -4,7 +4,6 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { ActionSheetController, ActionSheetOptions, AlertController, AlertOptions, LoadingController, LoadingOptions, ModalController, ModalOptions, ToastController, ToastOptions } from '@ionic/angular';
 import { Share, ShareOptions } from '@capacitor/share';
 import { Geolocation, Position } from '@capacitor/geolocation';
-import { AppStateService } from './app-state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +15,6 @@ export class UtilsService {
   modalCtrl = inject(ModalController);
   alertCtrl = inject(AlertController);
   actionSheetCtrl = inject(ActionSheetController);
-  appStateSvc = inject(AppStateService);
   router = inject(Router);
 
   async presentAlert(opts?: AlertOptions) {
@@ -28,8 +26,6 @@ export class UtilsService {
   }
 
   async takePicture(promptLabelHeader: string) {
-    
-    this.appStateSvc.setUploadInProgress(true);
 
     try {
 
@@ -43,15 +39,12 @@ export class UtilsService {
         promptLabelPicture: 'Toma una foto'
       });
 
-      this.appStateSvc.setUploadInProgress(false);
-
       return image;
 
     } catch (error) {
 
-      this.appStateSvc.setUploadInProgress(false);
       return null;
-      
+
     }
   };
 

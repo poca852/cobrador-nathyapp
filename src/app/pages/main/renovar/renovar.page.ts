@@ -9,6 +9,7 @@ import { UtilsService } from '../../../services/utils.service';
 import { ManualCreditStrategy } from './helpers/manual-credit-strategy';
 import { AutomaticCreditStrategy } from './helpers/automatic-credit-strategy';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { AppStateService } from 'src/app/services/app-state.service';
 
 @Component({
   selector: 'app-renovar',
@@ -21,6 +22,7 @@ export class RenovarPage {
   creditoService = inject(CreditoService);
   utilsSvc = inject(UtilsService);
   firebaseSvc = inject(FirebaseService);
+  appState = inject(AppStateService);
 
   cliente = computed(() => this.clienteServcie.currentClient());
   ngUnsubscribe = new Subject<void>();
@@ -51,10 +53,12 @@ export class RenovarPage {
   }
 
   ionViewWillEnter() {
+    this.appState.setIsRenovando(true);
     this.setupFormValueChanges();
   }
 
   ionViewWillLeave() {
+    this.appState.setIsRenovando(false);
     this.clienteServcie.removeCurrentClient();
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
@@ -166,7 +170,7 @@ export class RenovarPage {
     this.creditoService.addCredito(creditStrategy.createCredit(this.form.value as NuevoCredito))
       .subscribe({
         next: async (credito) => {
-
+          this.appState.setIsRenovando(false);
           this.clienteServcie.updateClient({
             ...this.imagesCliente,
           }).subscribe();
@@ -180,6 +184,7 @@ export class RenovarPage {
           });
         },
         error: async (err) => {
+          this.appState.setIsRenovando(false);
           await loading.dismiss();
           await this.utilsSvc.presentAlert({
             header: 'Error al renovar el cliente',

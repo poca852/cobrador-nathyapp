@@ -5,6 +5,7 @@ import { Cliente } from 'src/app/models';
 import { ClienteService } from '../../../services/cliente.service';
 import { UtilsService } from '../../../services/utils.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { AppStateService } from 'src/app/services/app-state.service';
 
 @Component({
   selector: 'app-cliente-nuevo',
@@ -17,6 +18,7 @@ export class ClienteNuevoPage {
   utilsSvc = inject(UtilsService);
   firebaseSvc = inject(FirebaseService);
   http = inject(HttpClient);
+  private readonly appState = inject(AppStateService);
 
   form = new FormGroup({
     dpi: new FormControl(null, [Validators.required, Validators.min(5)]),
@@ -34,9 +36,11 @@ export class ClienteNuevoPage {
   constructor() { }
 
   ionViewWillEnter() {
+    this.appState.setIsRenovando(true);
   }
 
   ionViewWillLeave() {
+    this.appState.setIsRenovando(false);
     this.form.reset();
   }
 
@@ -116,11 +120,13 @@ export class ClienteNuevoPage {
       this.clienteSvc.addCliente(this.form.value as Cliente)
         .subscribe({
           next: (cliente) => {
+            this.appState.setIsRenovando(false)
             this.clienteSvc.setCurrentClient(cliente);
             this.utilsSvc.routerLink('/main/renovar')
             loading.dismiss();
           },
           error: err => {
+            this.appState.setIsRenovando(false)
             loading.dismiss();
 
             let mensaje: string = 'Ocurrio un problema con el servidor por favor hable con el administrador';

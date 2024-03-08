@@ -12,6 +12,8 @@ export class AppStateService {
 
   private isGettingPosition: boolean = false;
 
+  private isRenovando: boolean = false;
+
   setUploadInProgress(uploading: boolean): void {
     this.uploadingImage = uploading;
   }
@@ -34,6 +36,14 @@ export class AppStateService {
 
   getIsGettingPosition(): boolean {
     return this.isGettingPosition;
+  }
+
+  setIsRenovando(value: boolean): void {
+    this.isRenovando = value;
+  }
+
+  getIsRenovando(): boolean {
+    return this.isRenovando;
   }
   
 }

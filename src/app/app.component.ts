@@ -62,7 +62,7 @@ export class AppComponent implements OnInit {
 
       if( !state.isActive && !this.appStateSvc.getIsMakingPayment() ){
 
-        if( !this.appStateSvc.isUploadInProgress() && this.utilsSvc.getFromLocalStorage('user').ruta.have_login_falso ) {
+        if( !this.appStateSvc.getIsRenovando() && this.utilsSvc.getFromLocalStorage('user').ruta.have_login_falso ) {
 
           if( !!this.utilsSvc.getFromLocalStorage('user') ){
             this.utilsSvc.routerLink('calculator')
