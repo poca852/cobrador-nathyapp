@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {evaluate} from 'mathjs';
+import { Component } from '@angular/core';
 import { UtilsService } from '../../services/utils.service';
+import { User } from '../../models/user.interface';
+
 
 @Component({
   selector: 'app-calculator',
@@ -9,70 +10,217 @@ import { UtilsService } from '../../services/utils.service';
 })
 export class CalculatorPage {
 
-  operations = ['+', '-', 'x', '÷'];
+  display = '0';
+  firstval: number = null;
+  operator: any = null;
+  newcursor = false;
+  isc = false;
+  iscomma = false;
 
-    operationsValue = '';
 
-    result = '';
+  constructor(
+    private utilsSvc: UtilsService,
+  ) {
+  }
 
-    constructor(
-      private utilsSvc: UtilsService,
-    ) {
-    }
+  get user() {
+    return this.utilsSvc.getFromLocalStorage('user') as User;
+  }
 
-    buttonNumericClick(number) {
-        this.operationsValue += '' + number;
-        this.calc();
-    }
-
-    buttonCalcClick(operationCalc) {
-        if (this.isLastOperationCalc()) {
-            this.operationsValue = this.operationsValue.substr(0, this.operationsValue.length - 1);
+  click(val: any) {
+    switch (val) {
+      case 'ac':
+        this.display = '0';
+        this.firstval = null;
+        this.operator = null;
+        this.newcursor = false;
+        break;
+      case 'c':
+        this.display = '0';
+        this.isc = false;
+        break;
+      case '+/-':
+        if (Math.sign(parseInt(this.display, 0)) === 1) {
+          const sign = -Math.abs(parseInt(this.display, 0));
+          this.display = sign.toString();
+        } else if (Math.sign(parseInt(this.display, 0)) === -1) {
+          const sign = Math.abs(parseInt(this.display, 0));
+          this.display = sign.toString();
+        } else {
+          this.display = this.display;
         }
-
-        if(this.operationsValue === this.utilsSvc.getFromLocalStorage('user').ruta.senha){
-          this.operationsValue = '';
-          return this.utilsSvc.routerLink('auth')
+        break;
+      case '%':
+        this.addpercent();
+        break;
+      case ':':
+        this.addoperator(':');
+        break;
+      case 'X':
+        this.addoperator('X');
+        break;
+      case '-':
+        this.addoperator('-');
+        break;
+      case '+':
+        this.addoperator('+');
+        break;
+      case '=':
+        if(this.display === this.user.ruta.senha){
+          this.display = '0';
+          this.utilsSvc.routerLink('auth');
+          return;
         }
-
-        return this.operationsValue += operationCalc;
-        
-    }
-
-    buttonClearClick() {
-        this.operationsValue = this.operationsValue.substr(0, this.operationsValue.length - 1);
-        this.calc();
-    }
-
-    isLastOperationCalc() {
-        if (this.operationsValue.length === 0) {
-            return false;
+        if (this.firstval !== null && this.operator !== null) {
+          this.calclast();
         }
-        const lastElemet = this.operationsValue.substr(this.operationsValue.length - 1);
-        return this.operations.indexOf(lastElemet) >= 0;
+        this.operator = null;
+        break;
+      case '0':
+        this.addnumber('0');
+        break;
+      case '1':
+        this.addnumber('1');
+        break;
+      case '2':
+        this.addnumber('2');
+        break;
+      case '3':
+        this.addnumber('3');
+        break;
+      case '4':
+        this.addnumber('4');
+        break;
+      case '5':
+        this.addnumber('5');
+        break;
+      case '6':
+        this.addnumber('6');
+        break;
+      case '7':
+        this.addnumber('7');
+        break;
+      case '8':
+        this.addnumber('8');
+        break;
+      case '9':
+        this.addnumber('9');
+        break;
+      case ',':
+        this.addcomma();
+        break;
     }
+  }
 
-    hasOperationCalc() {
-        if (this.operationsValue.length === 0) {
-            return false;
+  addcomma() {
+    if (this.iscomma === false) {
+      this.iscomma = true;
+    } else {
+      this.iscomma = false;
+    }
+  }
+
+  addnumber(nbr: string) {
+    if (nbr === '0') {
+      if (this.newcursor === true) {
+        this.display = nbr;
+        this.newcursor = false;
+      } else if (this.display !== '0') {
+        if (this.iscomma === true) {
+          this.display = `${this.display.toString()}.${nbr}`;
+        } else {
+          this.display = this.display.toString() + nbr;
         }
-        return this.operations.some(operation => this.operationsValue.indexOf(operation) >= 0);
-    }
-
-    calc() {
-        if (this.isLastOperationCalc() || !this.hasOperationCalc()) {
-            return;
+      } else if (this.display === '0') {
+        if (this.iscomma === true) {
+          this.display = `${this.display.toString()}.${nbr}`;
         }
-
-        let expression = this.operationsValue;
-        expression = this.replaceAll(expression, 'x', '*');
-        expression = this.replaceAll(expression, '÷', '/');
-
-        this.result = evaluate(expression);
+      }
+    } else {
+      if (this.newcursor === true) {
+        this.display = nbr;
+        this.newcursor = false;
+      } else if (this.display === '0') {
+        if (this.iscomma === true) {
+          if (this.display.toString().indexOf('.') > -1) {
+            this.display = this.display.toString() + nbr;
+          } else {
+            this.display = `${this.display.toString()}.${nbr}`;
+          }
+        } else {
+          this.display = nbr;
+        }
+      } else {
+        if (this.iscomma === true) {
+          if (this.display.toString().indexOf('.') > -1) {
+            this.display = this.display.toString() + nbr;
+          } else {
+            this.display = `${this.display.toString()}.${nbr}`;
+          }
+        } else {
+          this.display = this.display.toString() + nbr;
+        }
+      }
     }
+    this.isc = true;
+  }
 
-    replaceAll(target, search, replacement) {
-        return target.replace(new RegExp(search, 'g'), replacement);
+  addpercent() {
+    this.iscomma = false;
+    const dispval = parseInt(this.display, 0) / 100;
+    this.display = dispval.toString();
+  }
+
+  addoperator(op: string) {
+    if (this.newcursor === false) {
+      if (this.firstval === null) {
+        if (this.iscomma === true) {
+          this.firstval = parseFloat(this.display);
+        } else {
+          this.firstval = parseInt(this.display, 0);
+        }
+      }
+      if (this.firstval !== null && this.operator !== null) {
+        this.calclast();
+      }
     }
+    this.iscomma = false;
+    this.operator = op;
+    this.newcursor = true;
+  }
+
+  calclast() {
+    switch (this.operator) {
+      case ':':
+        if (this.iscomma === true) {
+          this.firstval = (this.firstval / parseFloat(this.display));
+        } else {
+          this.firstval = (this.firstval / parseInt(this.display, 0));
+        }
+        break;
+      case 'X':
+        if (this.iscomma === true) {
+          this.firstval = (this.firstval * parseFloat(this.display));
+        } else {
+          this.firstval = (this.firstval * parseInt(this.display, 0));
+        }
+        break;
+      case '-':
+        if (this.iscomma === true) {
+          this.firstval = (this.firstval - parseFloat(this.display));
+        } else {
+          this.firstval = (this.firstval - parseInt(this.display, 0));
+        }
+        break;
+      case '+':
+        if (this.iscomma === true) {
+          this.firstval = (this.firstval + parseFloat(this.display));
+        } else {
+          this.firstval = (this.firstval + parseInt(this.display, 0));
+        }
+        break;
+    }
+    this.display = this.firstval.toString();
+  }
 
 }

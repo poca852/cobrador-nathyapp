@@ -59,7 +59,6 @@ export class AppComponent implements OnInit {
 
   initialApp() {
     App.addListener('appStateChange', (state: AppState) => {
-      console.log(state)
       if( !state.isActive && !this.appStateSvc.getIsMakingPayment() ){
 
         if( !this.appStateSvc.getIsRenovando() && this.utilsSvc.getFromLocalStorage('user').ruta.have_login_falso ) {
