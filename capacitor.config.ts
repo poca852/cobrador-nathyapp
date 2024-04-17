@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'lat.nathyapp.cobrador',
-  appName: 'nathyapp',
+  appName: 'calculadora',
   webDir: 'www',
   server: {
     androidScheme: 'https'

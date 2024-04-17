@@ -1,7 +1,11 @@
 <ion-content [fullscreen]="true">
     <div class="calc-main">
-        <div class="calc-display">
-          <ion-input type="number" [(ngModel)]="display" class="ion-text-end"></ion-input>
+        <div class="calc-display ion-text-end">
+          <ion-text
+            [ngStyle]="{'font-size': '60px'}"
+          >{{display}}</ion-text>
+          <!-- <ion-input type="number" [(ngModel)]="display" class="ion-text-end"></ion-input> -->
+
         </div>
         <ion-grid>
           <ion-row>

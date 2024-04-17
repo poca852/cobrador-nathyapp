@@ -66,7 +66,7 @@ export class CalculatorPage {
         this.addoperator('+');
         break;
       case '=':
-        if(this.display === this.user.ruta.senha){
+        if(this.user && this.display === this.user.ruta.senha){
           this.display = '0';
           this.utilsSvc.routerLink('auth');
           return;
