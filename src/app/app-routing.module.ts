@@ -20,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'calculator',
+    redirectTo: 'auth',
     pathMatch: 'full'
   },
   {
